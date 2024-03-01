@@ -1,7 +1,7 @@
 import {Printable} from './Printable';
 import DOMPurify from 'dompurify';
 
-class PrintableStringTable implements Printable<string[][], string> {
+export class PrintableStringTable implements Printable<string[][]> {
     data: string[][];
     headers: boolean;
     constructor(data: string[][], headers: boolean) {

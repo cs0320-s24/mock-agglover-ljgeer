@@ -1,4 +1,4 @@
-export interface Printable<T, P> {
+export interface Printable<T> { // Not sure about this generic type, can keep for now
     data: T;
-    print(): P; // Takes in an object's data-type T and returns a printable P (Maybe force P to be a string of HTML)
+    print(): string; // Takes in an object's data-type and produces a string of printable HTML content
 }

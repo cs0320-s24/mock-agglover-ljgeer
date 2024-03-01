@@ -1,7 +1,7 @@
 import {Printable} from './Printable';
 import DOMPurify from 'dompurify';
 
-class PrintableString implements Printable<string, string> {
+export class PrintableString implements Printable<string> {
     data: string;
     constructor(data: string) {
         this.data = DOMPurify.sanitize(data); // maybe sanitize this string or escape any backslashes

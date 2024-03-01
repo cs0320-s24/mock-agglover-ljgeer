@@ -1,5 +1,5 @@
 import {Printable} from '../utility/Printable';
 
 export interface REPLFunction {    
-    (args: Array<string>): Printable<any, any>
+    (args: Array<string>): Printable<any>
 }
