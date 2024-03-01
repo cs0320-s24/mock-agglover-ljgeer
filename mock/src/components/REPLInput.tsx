@@ -5,6 +5,8 @@ import { ControlledInput } from './ControlledInput';
 interface REPLInputProps{
     history: string[];
     setHistory: Dispatch<SetStateAction<string[]>>;
+    outputMode: string;
+    setOutputMode: React.Dispatch<React.SetStateAction<string>>;
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -12,8 +14,9 @@ export function REPLInput(props : REPLInputProps) {
     // Remember: let React manage state in your webapp. 
     // Manages the contents of the input box
     const [commandString, setCommandString] = useState<string>('');
-    // TODO WITH TA : add a count state
-      const [count, setCount] = useState(0);
+    const [count, setCount] = useState<number>(0);
+
+    const outputMode = props.outputMode;
 
       function handleClick(commandString: string) {
         setCount(count + 1);
@@ -41,6 +44,19 @@ export function REPLInput(props : REPLInputProps) {
             {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
             {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
             <button onClick={() => handleClick(commandString)}>Submit ({count} submissions)</button>
-        </div>
+
+            {/* Radio button for selecting output mode */}
+            <div className="output-mode">
+              Output Mode:
+              <label className="radio-label">
+                <input type="radio" name="outputMode" value="verbose" checked={outputMode === 'verbose'} onChange={() => props.setOutputMode('verbose')} />
+                Verbose
+              </label>
+              <label className="radio-label">
+                <input type="radio" name="outputMode" value="brief" checked={outputMode === 'brief'} onChange={() => props.setOutputMode('brief')} />
+                Brief
+              </label>
+            </div>
+          </div>
     );
   }
