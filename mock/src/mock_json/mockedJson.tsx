@@ -31,13 +31,21 @@ export class mockedJson {
         this.availableCsvs.set('data/secretfolder/evil.csv', this.evilCsv);
     }
 
-    request(args: string[]): void { // Maybe make this return a Printable?
+    // Could delete this function and just specify each individual functionality in each REPLFunction,
+    // but for now, this sort of 'emulates' a server more accurately
+    request(args: string[]): Printable<any> {
         if (args[0] == "load_file") {
-            this.load(args.slice(1));
+            return this.load(args.slice(1));
         }
         if (args[0] == "view") {
-            this.view(args.slice(1));
+            return this.view(args.slice(1));
+        } 
+        if (args[0] == "search") {
+            return new PrintableString("to-be-implemented");
+        } else {
+            return new PrintableString("command error - available commands: load_file, view, search")
         }
+
     }
 
     load(args: string[]): Printable<any> {
