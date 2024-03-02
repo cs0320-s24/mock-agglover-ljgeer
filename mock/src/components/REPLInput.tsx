@@ -1,7 +1,6 @@
 import '../styles/main.css';
 import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
-import {mockedJson} from '../mock_json/mockedJson';
 import {CommandExecutor} from './repl_functions/CommandExecuter'
 import {Printable} from './utility/Printable'
 
@@ -23,14 +22,13 @@ export function REPLInput(props : REPLInputProps) {
     // Manages the contents of the input box
     const [commandString, setCommandString] = useState<string>('');
     const [count, setCount] = useState<number>(0);
-    const mockedJsonInstance = new mockedJson();
+    
     const commandExecutor = new CommandExecutor();
     const outputMode = props.outputMode;
 
       function handleClick(commandString: string) {
         setCount(count + 1);
         props.setHistory([...props.history, commandString]);
-        mockedJsonInstance.request(props.history)
 
         let commandArray : string[];
         commandArray = commandString.split(" ");
