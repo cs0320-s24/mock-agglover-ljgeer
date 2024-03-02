@@ -1,13 +1,20 @@
 import '../styles/main.css';
 import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
+import {CommandExecutor} from './repl_functions/CommandExecuter'
+import {Printable} from './utility/Printable'
 
 interface REPLInputProps{
     history: string[];
     setHistory: Dispatch<SetStateAction<string[]>>;
+
     outputMode: string;
-    setOutputMode: React.Dispatch<React.SetStateAction<string>>;
+    setOutputMode: Dispatch<React.SetStateAction<string>>;
+
+    commandOutput: Printable<any>[];
+    setCommandOutput: Dispatch<React.SetStateAction<Printable<any>[]>>;
 }
+
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props : REPLInputProps) {
@@ -15,12 +22,19 @@ export function REPLInput(props : REPLInputProps) {
     // Manages the contents of the input box
     const [commandString, setCommandString] = useState<string>('');
     const [count, setCount] = useState<number>(0);
-
+    
+    const commandExecutor = new CommandExecutor();
     const outputMode = props.outputMode;
 
       function handleClick(commandString: string) {
         setCount(count + 1);
         props.setHistory([...props.history, commandString]);
+
+        let commandArray : string[];
+        commandArray = commandString.split(" ");
+        props.setCommandOutput([...props.commandOutput, 
+          commandExecutor.executeCommand(commandArray[0], commandArray.slice(1))])
+
         setCommandString("");
       }
     
