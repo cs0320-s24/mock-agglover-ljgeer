@@ -54,7 +54,6 @@ test('after I type into the input box, its text changes', async ({ page }) => {
 });
 
 test('on page load, i see a button', async ({ page }) => {
-  // TODO WITH TA: Fill this in!
   await page.getByLabel('Login').click();
   await expect(page.getByLabel('Submit button')).toBeVisible()
 });
@@ -273,4 +272,38 @@ test('I cannot search with invalid argument count', async ({ page }) => {
     return history?.children[0]?.textContent;
   });
   expect(historyContent).toContain("Invalid argument length, correct usage: search [header_id] [term]");
+});
+
+test('i cannot see a submit button if i dont log in', async ({ page }) => {
+  await page.goto('http://localhost:8000/');
+  // Login button exists, but don't press it
+  await expect(page.getByLabel('Login')).toBeVisible();
+  await expect(page.getByLabel('Command input')).not.toBeVisible();
+  await expect(page.getByLabel('Submit button')).not.toBeVisible();
+});
+
+test('if i log in, do some stuff, log out, i cannot press other buttons', async ({ page }) => {
+  // Load and view a csv
+  await page.goto('http://localhost:8000/');
+  await page.getByLabel('Login').click();
+  await page.getByLabel('Command input').fill('load_file simple.csv');
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('Command input').fill('view');
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('verbose').click()
+
+  // you can use page.evaulate to grab variable content from the page for more complex assertions
+  const historyContent = await page.evaluate(() => {
+    const history = document.querySelector('.repl-history');
+    return history?.textContent;
+  });
+  expect(historyContent).toContain("has been loaded");
+  expect(historyContent).toContain("eleven");
+
+  // Signing out should remove the buttons from interaction
+  await page.getByLabel('Sign out').click();
+  await expect(page.getByLabel('Login')).toBeVisible();
+  await expect(page.getByLabel('Submit button')).not.toBeVisible();
+  await expect(page.getByLabel('Command input')).not.toBeVisible();
+  await expect(page.getByLabel('Submit button')).not.toBeVisible();
 });
