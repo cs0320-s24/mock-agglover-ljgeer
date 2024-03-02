@@ -43,7 +43,7 @@ export function REPLInput(props : REPLInputProps) {
             </fieldset>
             {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
             {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-            <button onClick={() => handleClick(commandString)}>Submit ({count} submissions)</button>
+            <button onClick={() => handleClick(commandString)} aria-label={"Submit button"}>Submit ({count} submissions)</button>
 
             {/* Radio button for selecting output mode */}
             <div className="output-mode">
