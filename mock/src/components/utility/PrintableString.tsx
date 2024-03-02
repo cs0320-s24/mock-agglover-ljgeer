@@ -7,6 +7,6 @@ export class PrintableString implements Printable<string> {
         this.data = DOMPurify.sanitize(data);
     }
     print(): JSX.Element {
-        return <p>{this.data}</p>
+        return <>{this.data}</>
     }
 }

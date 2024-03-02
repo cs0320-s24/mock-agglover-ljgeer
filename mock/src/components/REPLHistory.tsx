@@ -1,22 +1,27 @@
 import '../styles/main.css';
+import { Printable } from './utility/Printable'
 
 interface REPLHistoryProps{
     history: string[];
     outputMode: string;
+    commandOutput: Printable<any>[];
 }
 
-export function REPLHistory(props : REPLHistoryProps) {
+export function REPLHistory(props: REPLHistoryProps) {
     return (
         <div className="repl-history">
-            {/* This is where command history will go */}
-            {/* TODO: To go through all the pushed commands... try the .map() function! */}
-            {props.history.map((line, index) => 
-                props.outputMode === 'verbose' ? (
-                <p key={index}>Command: {line}</p>
-                ) : (
-                <p key={index}>{line}</p>
-                )
-            )}
+            {props.history.map((line, index) => (
+                <div key={index}>
+                    {props.outputMode === 'verbose' ? (
+                        <div>
+                            <p>Command: {line}</p>  
+                            <span>Output: {props.commandOutput[index].print()}</span>
+                        </div>
+                    ) : (
+                        <p>{props.commandOutput[index].print()}</p>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }

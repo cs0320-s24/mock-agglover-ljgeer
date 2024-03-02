@@ -45,7 +45,6 @@ export class mockedJson {
         } else {
             return new PrintableString("command error - available commands: load_file, view, search")
         }
-
     }
 
     load(args: string[]): Printable<any> {
@@ -57,7 +56,7 @@ export class mockedJson {
         if (this.availableCsvs.has("data/" + path)) {
             // Load the path inside mockedJson
             this.currentCsv = "data/" + path;
-            return new PrintableString("File " + path + " has been loaded.");
+            return new PrintableString(`File "${path}" has been loaded.`);
         } else {    
             return new PrintableString("File not found. Make sure file is in data/ directory.");
         }
@@ -77,6 +76,7 @@ export class mockedJson {
         }
     }
 
-
-    
+    // search(args: string[]): Printable<any> {
+        
+    // }
 }
