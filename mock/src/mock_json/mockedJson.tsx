@@ -82,10 +82,19 @@ export class mockedJson {
             return new PrintableString("Invalid argument length")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
-            if (args[0] == "0" && args[1] == "one") {
-                let csv: string[][] | undefined = this.availableCsvs.get(this.currentCsv);
-                if (csv !== undefined) {
-                    return new PrintableRow(csv[0]);
+            if (this.availableCsvs.get(this.currentCsv) == this.simpleCsv) {
+                if (args[0] == "0" && args[1] == "one") {
+                    let csv: string[][] | undefined = this.availableCsvs.get(this.currentCsv);
+                    if (csv !== undefined) {
+                        return new PrintableRow(csv[0]);
+                    }
+                }
+            } else if (this.availableCsvs.get(this.currentCsv) == this.headerCsv) {
+                if (args[0] == "header2" && args[1] == "element") {
+                    let csv: string[][] | undefined = this.availableCsvs.get(this.currentCsv);
+                    if (csv !== undefined) {
+                        return new PrintableRow(csv[1]);
+                    }
                 }
             }
             return new PrintableString("Search failed: value not found")
