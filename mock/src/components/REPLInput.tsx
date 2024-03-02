@@ -4,6 +4,9 @@ import { ControlledInput } from './ControlledInput';
 import {CommandExecutor} from './repl_functions/CommandExecuter'
 import {Printable} from './utility/Printable'
 
+/**
+ * Interface defining the props required by the REPLInput
+ */
 interface REPLInputProps{
     history: string[];
     setHistory: Dispatch<SetStateAction<string[]>>;
@@ -15,6 +18,13 @@ interface REPLInputProps{
     setCommandOutput: Dispatch<React.SetStateAction<Printable<any>[]>>;
 }
 
+/**
+ * Function component responsible for rendering the input field and controls for a 
+ * REPL. It allows users to input commands, submit them, and select the output mode (verbose or brief).
+ * @param props - Props object containing history, commandOutput, outputMode, 
+ * setHistory, setCommandOutput, setOutputMode.
+ * @returns JSX element representing the REPL input interface.
+ */
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props : REPLInputProps) {
@@ -26,17 +36,23 @@ export function REPLInput(props : REPLInputProps) {
     const commandExecutor = new CommandExecutor();
     const outputMode = props.outputMode;
 
-      function handleClick(commandString: string) {
-        setCount(count + 1);
-        props.setHistory([...props.history, commandString]);
+    /**
+     * This handleClick function is called every time the user clicks the submit button. 
+     * It increases the count and stores teh command and command output into the appropriate state
+     * variables
+     * @param commandString the command string from the command input box
+     */
+    function handleClick(commandString: string) {
+      setCount(count + 1);
+      props.setHistory([...props.history, commandString]);
 
-        let commandArray : string[];
-        commandArray = commandString.split(" ");
-        props.setCommandOutput([...props.commandOutput, 
-          commandExecutor.executeCommand(commandArray[0], commandArray.slice(1))])
+      let commandArray : string[];
+      commandArray = commandString.split(" ");
+      props.setCommandOutput([...props.commandOutput, 
+        commandExecutor.executeCommand(commandArray[0], commandArray.slice(1))])
 
-        setCommandString("");
-      }
+      setCommandString("");
+    }  
     
     // TODO WITH TA: build a handleSubmit function called in button onClick
     // TODO: Once it increments, try to make it push commands... Note that you can use the `...` spread syntax to copy what was there before

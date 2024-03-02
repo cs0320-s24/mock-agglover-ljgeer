@@ -1,12 +1,21 @@
 import '../styles/main.css';
 import { Printable } from './utility/Printable'
 
+/**
+ * Interface defining the props required by the REPLHistory component.
+ */
 interface REPLHistoryProps{
     history: string[];
     outputMode: string;
     commandOutput: Printable<any>[];
 }
 
+/**
+ * Function component responsible for displaying the history of commands and their
+ *  outputs in a REPL
+ * @param props - Props object containing history, outputMode, and commandOutput.
+ * @returns JSX element displaying the command history.
+ */
 export function REPLHistory(props: REPLHistoryProps) {
     return (
         <div className="repl-history">

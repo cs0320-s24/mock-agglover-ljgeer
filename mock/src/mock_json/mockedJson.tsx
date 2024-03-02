@@ -3,6 +3,10 @@ import {PrintableString} from '../components/utility/PrintableString';
 import {PrintableStringTable} from '../components/utility/PrintableStringTable';
 import {PrintableRow} from '../components/utility/PrintableRow';
 
+/**
+ * This class stores example CSVs and handles mocking the responses for calls like search, view, 
+ * and load_file
+ */
 export class mockedJson {
     private currentCsv: string = "";
     private availableCsvs: Map<string, string[][]>;
@@ -13,6 +17,10 @@ export class mockedJson {
     private badRequest: string[][];
     private evilCsv: string[][];
 
+    /**
+     * This constructor sets up the example CSVs and creates a map between the CSV and the 
+     * file path
+     */
     constructor() { // Populate these with actual Csvs?
         this.simpleCsv = [
             ["one", "two", "three", "four"],
@@ -48,6 +56,12 @@ export class mockedJson {
         }
     }
 
+    /**
+     * This function handles the mocking of the load functionality. It stores the CSV in a variable
+     * and returns a message saying whether or not the loading was successful. 
+     * @param args the arguments for load (filepath)
+     * @returns either a successful loading message or a failure
+     */
     load(args: string[]): Printable<any> {
         // Check for correct arguments
         if (args.length != 1) {
@@ -63,6 +77,12 @@ export class mockedJson {
         }
     }
 
+    /**
+     * This function handles the mocking of the view functionality. If a CSV has been loaded, 
+     * it will display the CSV or else it will display an error
+     * @param args the arguments for load (should not be any)
+     * @returns either the CSV to be viewed or a failure message
+     */
     view(args: string[]): Printable<any> {
         // Check for correct arguments (for sanity)
         if (args.length != 0) {
@@ -77,6 +97,13 @@ export class mockedJson {
         }
     }
 
+    /**
+     * This function handles the mocking of the search functionality. If a CSV has been loaded, 
+     * it will "search" the CSV and display the row the value was found in (if found). Otherwise, 
+     * it will just return a failure message
+     * @param args the arguments for search (column and value)
+     * @returns the row that the value was found in, or a failure message
+     */
     search(args: string[]): Printable<any> {
         if (args.length != 2) {
             return new PrintableString("Invalid argument length")

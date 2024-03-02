@@ -14,10 +14,14 @@ import {Printable} from '../components/utility/Printable';
 */
 
 export default function REPL() {
-  // TODO: Add some kind of shared state that holds all the commands submitted.
 
+  //state variable to store and update history
   const [history, setHistory] = useState<string[]>([]);
+
+  //state variable to store and update the output mode
   const [outputMode, setOutputMode] = useState<string>('brief');
+
+  //state variable to store and update the command output
   const [commandOutput, setCommandOutput] = useState<Printable<any>[]>([]);
 
 
