@@ -111,7 +111,7 @@ export class mockedJson {
      */
     search(args: string[]): Printable<any> {
         if (args.length != 3) {
-            return new PrintableString("Invalid argument length")
+            return new PrintableString("Invalid argument length, correct usage: search <header_id> <term>")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
             if (this.availableCsvs.get(this.currentCsv) == this.simpleCsv) {
