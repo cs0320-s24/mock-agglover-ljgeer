@@ -1,15 +1,19 @@
 import { REPLFunction } from './REPLFunction';
 import { load } from './commands/Load'
+import { view } from './commands/View'
 import {Printable} from '../utility/Printable'
 import {PrintableString} from '../utility/PrintableString'
+import {mockedJson} from '../../mock_json/mockedJson';
 
-//IDEA: maybe we can call register command and execute command on command line 
+export const mock = new mockedJson();
+
 export class CommandExecutor {
     private commands: Map<string, REPLFunction>;
 
     constructor() {
         this.commands = new Map<string, REPLFunction>();
         this.registerCommand("load_file", load);
+        this.registerCommand("view", view);
         
         //can add additional commands here
     }
@@ -25,7 +29,7 @@ export class CommandExecutor {
     }
 
     // Method to execute a command
-    public executeCommand(commandName: string, args: Array<string>): Printable<any> {
+    public executeCommand(commandName: string, args: string[]): Printable<any> {
         const commandFunction = this.commands.get(commandName);
         if (commandFunction) {
             return commandFunction(args);

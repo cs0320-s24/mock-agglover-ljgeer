@@ -17,14 +17,14 @@ export class PrintableStringTable implements Printable<string[][]> {
             if (i == 0 && this.headers) { // Make HTML table headers
                 table += "<thead>"
                 table += "<tr>"
-                for (var j = 0; i < this.data[i].length; j++) {
+                for (var j = 0; j < this.data[i].length; j++) {
                     table += "<th>" + this.data[i][j] + "</th>";
                 }
                 table += "</tr>"
                 table += "</thead>"
             } else {
                 table += "<tr>";
-                for (var j = 0; i < this.data[i].length; j++) {
+                for (var j = 0; j < this.data[i].length; j++) {
                     table += "<td>" + this.data[i][j] + "</td>";
                 }
                 table += "</tr>";

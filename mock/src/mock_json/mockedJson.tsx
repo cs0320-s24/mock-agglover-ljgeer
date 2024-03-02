@@ -56,7 +56,7 @@ export class mockedJson {
         if (this.availableCsvs.has("data/" + path)) {
             // Load the path inside mockedJson
             this.currentCsv = "data/" + path;
-            return new PrintableString("File " + path + " has been loaded.");
+            return new PrintableString(`File "${path}" has been loaded.`);
         } else {    
             return new PrintableString("File not found. Make sure file is in data/ directory.");
         }
