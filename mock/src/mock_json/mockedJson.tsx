@@ -1,6 +1,7 @@
 import {Printable} from '../components/utility/Printable';
 import {PrintableString} from '../components/utility/PrintableString';
 import {PrintableStringTable} from '../components/utility/PrintableStringTable';
+import {PrintableRow} from '../components/utility/PrintableRow';
 
 export class mockedJson {
     private currentCsv: string = "";
@@ -70,9 +71,9 @@ export class mockedJson {
         if (this.availableCsvs.has(this.currentCsv)) {
             // Headers should really be checked for 'view' as well, but since CSVParser did not specify it,
             // we will just assume headers are false for viewcsv
-            return new PrintableStringTable(this.availableCsvs.get(this.currentCsv)!, false)
+            return new PrintableStringTable(this.availableCsvs.get(this.currentCsv)!, false);
         } else {
-            return new PrintableString("Please load a file first using load_file.")
+            return new PrintableString("Please load a file first using load_file.");
         }
     }
 
@@ -81,11 +82,15 @@ export class mockedJson {
             return new PrintableString("Invalid argument length")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
-            // Headers should really be checked for 'view' as well, but since CSVParser did not specify it,
-            // we will just assume headers are false for viewcsv
-            return new PrintableStringTable(this.availableCsvs.get(this.currentCsv)!, false)
+            if (args[0] == "0" && args[1] == "one") {
+                let csv: string[][] | undefined = this.availableCsvs.get(this.currentCsv);
+                if (csv !== undefined) {
+                    return new PrintableRow(csv[0]);
+                }
+            }
+            return new PrintableString("Search failed: value not found")
         } else {
-            return new PrintableString("Please load a file first using load_file.")
+            return new PrintableString("Please load a file first using load_file.");
         }
     }
 }

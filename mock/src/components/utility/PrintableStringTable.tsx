@@ -4,6 +4,7 @@ import DOMPurify from 'dompurify';
 export class PrintableStringTable implements Printable<string[][]> {
     data: string[][];
     headers: boolean;
+    
     constructor(data: string[][], headers: boolean) {
         this.data = data.map((row) => row.map((elem) => DOMPurify.sanitize(elem)));
         this.headers = headers
