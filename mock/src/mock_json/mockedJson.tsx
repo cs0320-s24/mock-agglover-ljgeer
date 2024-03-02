@@ -45,7 +45,6 @@ export class mockedJson {
         } else {
             return new PrintableString("command error - available commands: load_file, view, search")
         }
-
     }
 
     load(args: string[]): Printable<any> {

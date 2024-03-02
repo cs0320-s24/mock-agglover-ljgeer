@@ -2,6 +2,7 @@ import '../styles/main.css';
 import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
 import {mockedJson} from '../mock_json/mockedJson';
+import {CommandExecutor} from './repl_functions/CommandExecuter'
 
 interface REPLInputProps{
     history: string[];
@@ -9,6 +10,7 @@ interface REPLInputProps{
     outputMode: string;
     setOutputMode: React.Dispatch<React.SetStateAction<string>>;
 }
+
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props : REPLInputProps) {
@@ -17,6 +19,7 @@ export function REPLInput(props : REPLInputProps) {
     const [commandString, setCommandString] = useState<string>('');
     const [count, setCount] = useState<number>(0);
     const mockedJsonInstance = new mockedJson();
+    const commandExecutor = new CommandExecutor();
     const outputMode = props.outputMode;
 
       function handleClick(commandString: string) {

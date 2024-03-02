@@ -17,7 +17,6 @@ export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
 
   const [history, setHistory] = useState<string[]>([]);
-  const [commandOutput, setOutput] = useState<Printable<string>[]>([]);
   const [outputMode, setOutputMode] = useState<string>('brief');
 
   return (
