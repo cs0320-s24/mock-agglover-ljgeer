@@ -1,6 +1,7 @@
 import '../styles/main.css';
 import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
+import {mockedJson} from '../mock_json/mockedJson';
 
 interface REPLInputProps{
     history: string[];
@@ -15,12 +16,13 @@ export function REPLInput(props : REPLInputProps) {
     // Manages the contents of the input box
     const [commandString, setCommandString] = useState<string>('');
     const [count, setCount] = useState<number>(0);
-
+    const mockedJsonInstance = new mockedJson();
     const outputMode = props.outputMode;
 
       function handleClick(commandString: string) {
         setCount(count + 1);
         props.setHistory([...props.history, commandString]);
+        mockedJsonInstance.request(props.history)
         setCommandString("");
       }
     
@@ -42,21 +44,4 @@ export function REPLInput(props : REPLInputProps) {
               <ControlledInput value={commandString} setValue={setCommandString} ariaLabel={"Command input"}/>
             </fieldset>
             {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
-            {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-            <button onClick={() => handleClick(commandString)}>Submit ({count} submissions)</button>
-
-            {/* Radio button for selecting output mode */}
-            <div className="output-mode">
-              Output Mode:
-              <label className="radio-label">
-                <input type="radio" name="outputMode" value="verbose" checked={outputMode === 'verbose'} onChange={() => props.setOutputMode('verbose')} />
-                Verbose
-              </label>
-              <label className="radio-label">
-                <input type="radio" name="outputMode" value="brief" checked={outputMode === 'brief'} onChange={() => props.setOutputMode('brief')} />
-                Brief
-              </label>
-            </div>
-          </div>
-    );
-  }
+        
