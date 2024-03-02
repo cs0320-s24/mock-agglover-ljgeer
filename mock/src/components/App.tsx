@@ -12,8 +12,10 @@ function App() {
   return (
     <div className="App">
       <p className="App-header">
-        <h1>Mock</h1>
-        <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <h1 className="title">Mock</h1>
+        <div className="button">
+          <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        </div>
       </p>
 
       { isLoggedIn && <REPL /> }

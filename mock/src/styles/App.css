@@ -12,3 +12,12 @@
   font-size: calc(1px + 2vmin);
   color: white;
 }
+
+.title {
+  margin: 7px;
+  margin-top: 15px;
+}
+
+.button {
+  margin: 5px;
+}
