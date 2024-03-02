@@ -4,9 +4,9 @@ import DOMPurify from 'dompurify';
 export class PrintableString implements Printable<string> {
     data: string;
     constructor(data: string) {
-        this.data = DOMPurify.sanitize(data); // maybe sanitize this string or escape any backslashes
+        this.data = DOMPurify.sanitize(data);
     }
-    print(): string {
-        return this.data
+    print(): JSX.Element {
+        return <>{this.data}</>
     }
 }

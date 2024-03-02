@@ -75,4 +75,8 @@ export class mockedJson {
             return new PrintableString("Please load a file first using load_file.")
         }
     }
+
+    // search(args: string[]): Printable<any> {
+        
+    // }
 }

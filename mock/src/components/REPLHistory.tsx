@@ -15,7 +15,7 @@ export function REPLHistory(props: REPLHistoryProps) {
                     {props.outputMode === 'verbose' ? (
                         <div>
                             <p>Command: {line}</p>  
-                            <p>Output: {props.commandOutput[index].print()}</p>
+                            <span>Output: {props.commandOutput[index].print()}</span>
                         </div>
                     ) : (
                         <p>{props.commandOutput[index].print()}</p>

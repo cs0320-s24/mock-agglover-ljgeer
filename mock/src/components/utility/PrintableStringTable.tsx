@@ -9,29 +9,46 @@ export class PrintableStringTable implements Printable<string[][]> {
         this.headers = headers
     }
 
-    // https://stackoverflow.com/questions/15164655/generate-html-table-from-2d-javascript-array
-    // Slightly edited from above source (added sanitization and headers)
-    print(): string {
-        var table = "<table>";
-        for (var i = 0; i < this.data.length; i++) {
-            if (i == 0 && this.headers) { // Make HTML table headers
-                table += "<thead>"
-                table += "<tr>"
-                for (var j = 0; j < this.data[i].length; j++) {
-                    table += "<th>" + this.data[i][j] + "</th>";
-                }
-                table += "</tr>"
-                table += "</thead>"
-            } else {
-                table += "<tr>";
-                for (var j = 0; j < this.data[i].length; j++) {
-                    table += "<td>" + this.data[i][j] + "</td>";
-                }
-                table += "</tr>";
-            }
-        }
-        table += "</table>";
-
-        return table;
+    // Slightly adapted from https://www.geeksforgeeks.org/how-to-build-an-html-table-using-reactjs-from-arrays/
+    print(): JSX.Element {
+        if (this.headers) {
+            const headers = this.data[0];
+            const data = this.data.slice(1);
+            return (
+                <table>
+                    <thead>
+                        <tr>
+                            {headers.map((header, headerIndex) => (
+                                <th key={headerIndex}>{header}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {row.map((elem, elemIndex) => (
+                                    <td key={elemIndex}>{elem}</td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )
+        } else {
+            const data = this.data;
+            return (
+                <table>
+                    <tbody>
+                        {data.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {row.map((elem, elemIndex) => (
+                                    <td key={elemIndex}>{elem}</td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )
+        }        
     }
 }
