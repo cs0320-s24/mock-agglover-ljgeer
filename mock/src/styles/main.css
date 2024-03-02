@@ -46,3 +46,6 @@ button{
     margin: auto;
     display: block;
 }
+.printable-string-table {
+    border: 1px solid #444444;
+}

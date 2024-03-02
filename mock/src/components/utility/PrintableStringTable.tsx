@@ -35,7 +35,7 @@ export class PrintableStringTable implements Printable<string[][]> {
                         {data.map((row, rowIndex) => (
                             <tr key={rowIndex}>
                                 {row.map((elem, elemIndex) => (
-                                    <td key={elemIndex}>{elem}</td>
+                                    <td key={elemIndex} className="printable-string-table">{elem}</td>
                                 ))}
                             </tr>
                         ))}
@@ -50,7 +50,7 @@ export class PrintableStringTable implements Printable<string[][]> {
                         {data.map((row, rowIndex) => (
                             <tr key={rowIndex}>
                                 {row.map((elem, elemIndex) => (
-                                    <td key={elemIndex}>{elem}</td>
+                                    <td key={elemIndex} className="printable-string-table">{elem}</td>
                                 ))}
                             </tr>
                         ))}
