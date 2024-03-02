@@ -1,6 +1,6 @@
 import { REPLFunction } from '../REPLFunction';
 import { PrintableString } from '../../utility/PrintableString';
-import { mock } from '../CommandExecuter';
+import { mock } from '../CommandExecutor';
 
 /**
  * This function handles the searching aspect of this project. It implements the REPLFunction

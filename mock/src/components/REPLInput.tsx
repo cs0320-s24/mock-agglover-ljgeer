@@ -1,7 +1,7 @@
 import '../styles/main.css';
 import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
-import {CommandExecutor} from './repl_functions/CommandExecuter'
+import {CommandExecutor} from './repl_functions/CommandExecutor'
 import {Printable} from './utility/Printable'
 
 /**
