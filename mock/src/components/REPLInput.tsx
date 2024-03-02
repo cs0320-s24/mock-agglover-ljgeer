@@ -3,12 +3,17 @@ import { Dispatch, SetStateAction, useState} from 'react';
 import { ControlledInput } from './ControlledInput';
 import {mockedJson} from '../mock_json/mockedJson';
 import {CommandExecutor} from './repl_functions/CommandExecuter'
+import {Printable} from './utility/Printable'
 
 interface REPLInputProps{
     history: string[];
     setHistory: Dispatch<SetStateAction<string[]>>;
+
     outputMode: string;
-    setOutputMode: React.Dispatch<React.SetStateAction<string>>;
+    setOutputMode: Dispatch<React.SetStateAction<string>>;
+
+    commandOutput: Printable<any>[];
+    setCommandOutput: Dispatch<React.SetStateAction<Printable<any>[]>>;
 }
 
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
@@ -26,6 +31,12 @@ export function REPLInput(props : REPLInputProps) {
         setCount(count + 1);
         props.setHistory([...props.history, commandString]);
         mockedJsonInstance.request(props.history)
+
+        let commandArray : string[];
+        commandArray = commandString.split(" ");
+        props.setCommandOutput([...props.commandOutput, 
+          commandExecutor.executeCommand(commandArray[0], commandArray.slice(1))])
+
         setCommandString("");
       }
     
