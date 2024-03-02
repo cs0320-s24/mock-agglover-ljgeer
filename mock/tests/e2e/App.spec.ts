@@ -62,21 +62,54 @@ test('on page load, i see a button', async ({ page }) => {
 test('after I click the button, its label increments', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
-  await expect(page.getByRole('button', {name: 'Submitted 0 times'})).toBeVisible()
-  await page.getByRole('button', {name: 'Submitted 0 times'}).click()
-  await expect(page.getByRole('button', {name: 'Submitted 1 times'})).toBeVisible()
+  await expect(page.getByLabel('Submit button')).toHaveText("Submit (0 submissions)")
+  await page.getByLabel('Submit button').click()
+  await expect(page.getByLabel('Submit button')).toHaveText("Submit (1 submissions)")
 });
 
 test('after I click the button, my command gets pushed', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
   await page.getByLabel('Command input').fill('Awesome command');
-  await page.getByRole('button', {name: 'Submitted 0 times'}).click()
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('verbose').click()
 
   // you can use page.evaulate to grab variable content from the page for more complex assertions
-  const firstChild = await page.evaluate(() => {
+  const historyContent = await page.evaluate(() => {
     const history = document.querySelector('.repl-history');
     return history?.children[0]?.textContent;
   });
-  expect(firstChild).toEqual("Awesome command");
+  expect(historyContent).toContain("Awesome command");
+});
+
+test('I can load simple.csv, then view it', async ({ page }) => {
+  await page.goto('http://localhost:8000/');
+  await page.getByLabel('Login').click();
+  await page.getByLabel('Command input').fill('load_file simple.csv');
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('Command input').fill('view');
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('verbose').click()
+
+  // you can use page.evaulate to grab variable content from the page for more complex assertions
+  const historyContent = await page.evaluate(() => {
+    const history = document.querySelector('.repl-history');
+    return history?.textContent;
+  });
+  expect(historyContent).toContain("has been loaded");
+  expect(historyContent).toContain("eleven");
+});
+
+test('I cannot load bogus.csv', async ({ page }) => {
+  await page.goto('http://localhost:8000/');
+  await page.getByLabel('Login').click();
+  await page.getByLabel('Command input').fill('load_file bogus.csv');
+  await page.getByLabel('Submit button').click()
+
+  // you can use page.evaulate to grab variable content from the page for more complex assertions
+  const historyContent = await page.evaluate(() => {
+    const history = document.querySelector('.repl-history');
+    return history?.children[0]?.textContent;
+  });
+  expect(historyContent).toContain("File not found.");
 });

@@ -79,11 +79,11 @@ export function REPLInput(props : REPLInputProps) {
             <div className="output-mode">
               Output Mode:
               <label className="radio-label">
-                <input type="radio" name="outputMode" value="verbose" checked={outputMode === 'verbose'} onChange={() => props.setOutputMode('verbose')} />
+                <input type="radio" aria-label="verbose" name="outputMode" value="verbose" checked={outputMode === 'verbose'} onChange={() => props.setOutputMode('verbose')} />
                 Verbose
               </label>
               <label className="radio-label">
-                <input type="radio" name="outputMode" value="brief" checked={outputMode === 'brief'} onChange={() => props.setOutputMode('brief')} />
+                <input type="radio" aria-labe="brief" name="outputMode" value="brief" checked={outputMode === 'brief'} onChange={() => props.setOutputMode('brief')} />
                 Brief
               </label>
             </div>
