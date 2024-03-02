@@ -27,6 +27,9 @@ test('on page load, i see a login button', async ({ page }) => {
   await expect(page.getByLabel('Login')).toBeVisible()
 })
 
+/**
+ * test for ensuring that the input box is not visible without logging in 
+ */
 test('on page load, i dont see the input box until login', async ({ page }) => {
   // Notice: http, not https! Our front-end is not set up for HTTPs.
   await expect(page.getByLabel('Sign Out')).not.toBeVisible()
@@ -38,6 +41,9 @@ test('on page load, i dont see the input box until login', async ({ page }) => {
   await expect(page.getByLabel('Command input')).toBeVisible()
 })
 
+/**
+ * test to ensure that the placeholder goes away after typing in the input box
+ */
 test('after I type into the input box, its text changes', async ({ page }) => {
   // Step 1: Navigate to a URL
   await page.getByLabel('Login').click();
@@ -53,12 +59,18 @@ test('after I type into the input box, its text changes', async ({ page }) => {
   await expect(page.getByLabel('Command input')).toHaveValue(mock_input)
 });
 
+/**
+ * test to ensure that the login button is present
+ */
 test('on page load, i see a button', async ({ page }) => {
   // TODO WITH TA: Fill this in!
   await page.getByLabel('Login').click();
   await expect(page.getByLabel('Submit button')).toBeVisible()
 });
 
+/**
+ * test to ensrue that the submit button increments after clicking
+ */
 test('after I click the button, its label increments', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -68,6 +80,9 @@ test('after I click the button, its label increments', async ({ page }) => {
   await expect(page.getByLabel('Submit button')).toHaveText("Submit (1 submissions)")
 });
 
+/**
+ * test to ensure that the commands are pushed properly after submitting
+ */
 test('after I click the button, my command gets pushed', async ({ page }) => {
   // CHANGED
   await page.goto('http://localhost:8000/');
@@ -84,6 +99,9 @@ test('after I click the button, my command gets pushed', async ({ page }) => {
   expect(historyContent).toContain("Awesome command");
 });
 
+/**
+ * test to ensure that a csv can be loaded and viewed
+ */
 test('I can load simple.csv, then view it', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -102,6 +120,9 @@ test('I can load simple.csv, then view it', async ({ page }) => {
   expect(historyContent).toContain("eleven");
 });
 
+/**
+ * test to ensure that a nonexistent csv can not be loaded
+ */
 test('I cannot load bogus.csv', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -116,6 +137,9 @@ test('I cannot load bogus.csv', async ({ page }) => {
   expect(historyContent).toContain("File not found.");
 });
 
+/**
+ * test to ensure that loading must be done before viewing
+ */
 test('I cannot view without loading', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -130,6 +154,9 @@ test('I cannot view without loading', async ({ page }) => {
   expect(historyContent).toContain("Please load a file first using load_file.");
 });
 
+/**
+ * test to ensure that loading must be done before searching
+ */
 test('I cannot search without loading', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -144,6 +171,9 @@ test('I cannot search without loading', async ({ page }) => {
   expect(historyContent).toContain("Please load a file first using load_file.");
 });
 
+/**
+ * test to ensure that searching can output a row that the value was found in
+ */
 test('I can load simple.csv, then search it and find a result', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -160,6 +190,10 @@ test('I can load simple.csv, then search it and find a result', async ({ page })
   expect(outputTableRow).toContain(expectedRow);
 });
 
+/**
+ * test to ensure that searching can output a row that the value was found in for a csv 
+ * with headers
+ */
 test('I can load header.csv, then search it and find a result', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -176,6 +210,9 @@ test('I can load header.csv, then search it and find a result', async ({ page })
   expect(outputTableRow).toContain(expectedRow);
 });
 
+/**
+ * test to ensure that searching behaves properly when no value is found
+ */
 test('I can load simple.csv, then search it and not find a result', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -192,6 +229,9 @@ test('I can load simple.csv, then search it and not find a result', async ({ pag
   expect(outputTableRow).toContain(expectedRow);
 });
 
+/**
+ * test to ensure that you can load a csv, view it, and then load another and view it properly
+ */
 test('I can load simple.csv, then view it, then load something else and view it', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -219,6 +259,9 @@ test('I can load simple.csv, then view it, then load something else and view it'
   expect(outputTableRow2).toContain(expectedRow2);
 });
 
+/**
+ * test to ensure that the load_file command cannot be run without specifying a file path
+ */
 test('I cannot load without specifiying a file path', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -233,6 +276,9 @@ test('I cannot load without specifiying a file path', async ({ page }) => {
   expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
 });
 
+/**
+ * test to ensure that load_file can only take one argument
+ */
 test('I cannot load with too many arguments', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -247,6 +293,9 @@ test('I cannot load with too many arguments', async ({ page }) => {
   expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
 });
 
+/**
+ * test to ensure that view can only take one argument
+ */
 test('I cannot view with too many arguments', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
@@ -261,6 +310,9 @@ test('I cannot view with too many arguments', async ({ page }) => {
   expect(historyContent).toContain("Incorrect usage: view has no arguments.");
 });
 
+/**
+ * test to ensure that search takes two arguments
+ */
 test('I cannot search with invalid argument count', async ({ page }) => {
   await page.goto('http://localhost:8000/');
   await page.getByLabel('Login').click();
