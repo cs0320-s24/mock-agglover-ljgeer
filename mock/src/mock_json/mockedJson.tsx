@@ -40,17 +40,22 @@ export class mockedJson {
         this.availableCsvs.set('data/secretfolder/evil.csv', this.evilCsv);
     }
 
-    // Could delete this function and just specify each individual functionality in each REPLFunction,
-    // but for now, this sort of 'emulates' a server more accurately
+    /**
+     * This request function 'emulates' an API server more accurately, but isn't necessary for now.
+     * Depending on how the Server API communicates with individual REPLFunctions, behavior can
+     * be modeled similar to this function.
+     * @param args List of arguments to a server API
+     * @returns Mocked responses based on list of arguments
+     */
     request(args: string[]): Printable<any> {
-        if (args[0] == "load_file") {
+        if (args[0] == "loadcsv") {
             return this.load(args.slice(1));
         }
-        if (args[0] == "view") {
+        if (args[0] == "viewcsv") {
             return this.view(args.slice(1));
         } 
-        if (args[0] == "search") {
-            return new PrintableString("to-be-implemented");
+        if (args[0] == "searchcsv") {
+            return this.search(args.slice(1));
         } else {
             return new PrintableString("command error - available commands: load_file, view, search")
         }
@@ -105,7 +110,7 @@ export class mockedJson {
      * @returns the row that the value was found in, or a failure message
      */
     search(args: string[]): Printable<any> {
-        if (args.length != 2) {
+        if (args.length != 3) {
             return new PrintableString("Invalid argument length")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
