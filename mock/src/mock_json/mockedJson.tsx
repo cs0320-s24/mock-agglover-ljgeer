@@ -16,6 +16,7 @@ export class mockedJson {
     private headerCsv: string[][];
     private badRequest: string[][];
     private evilCsv: string[][];
+    private bigCsv: string[][];
 
     /**
      * This constructor sets up the example CSVs and creates a map between the CSV and the 
@@ -32,12 +33,23 @@ export class mockedJson {
             ["another not-header", "final not-header"]];
         this.badRequest = [["placeholder"]];
         this.evilCsv = [["</tr><button>hacked, harharhar!</button>"]];
+        this.bigCsv = [
+            ["one", "two", "three", "four", "one", "two", "three", "four",
+            "one", "two", "three", "four", "one", "two", "three", "four",
+            "one", "two", "three", "four", "one", "two", "three", "four"],
+            ["five", "six", "seven", "eight", "five", "six", "seven", "eight",
+            "five", "six", "seven", "eight", "five", "six", "seven", "eight",
+            "five", "six", "seven", "eight", "five", "six", "seven", "eight"],
+            ["nine", "ten", "eleven", "twelve", "nine", "ten", "eleven", "twelve",
+            "nine", "ten", "eleven", "twelve", "nine", "ten", "eleven", "twelve",
+            "nine", "ten", "eleven", "twelve", "nine", "ten", "eleven", "twelve"]];
         
         this.availableCsvs = new Map();
         this.availableCsvs.set('data/simple.csv', this.simpleCsv);
         this.availableCsvs.set('data/header.csv', this.headerCsv);
         this.availableCsvs.set('data/imaginary.csv', this.badRequest);
         this.availableCsvs.set('data/secretfolder/evil.csv', this.evilCsv);
+        this.availableCsvs.set('data/big.csv', this.bigCsv);
     }
 
     /**

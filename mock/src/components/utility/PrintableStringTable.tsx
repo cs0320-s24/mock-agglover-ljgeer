@@ -23,7 +23,7 @@ export class PrintableStringTable implements Printable<string[][]> {
             const headers = this.data[0];
             const data = this.data.slice(1);
             return (
-                <table>
+                <table className="printable-string-table">
                     <thead>
                         <tr>
                             {headers.map((header, headerIndex) => (
