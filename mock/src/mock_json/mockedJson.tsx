@@ -70,7 +70,7 @@ export class mockedJson {
     load(args: string[]): Printable<any> {
         // Check for correct arguments
         if (args.length != 1) {
-            return new PrintableString(" Invalid argument length, correct usage: load_file <path to file>");
+            return new PrintableString(" Invalid argument length, correct usage: load_file [path to file]");
         }
         const path = args[0];
         if (this.availableCsvs.has("data/" + path)) {
@@ -111,7 +111,7 @@ export class mockedJson {
      */
     search(args: string[]): Printable<any> {
         if (args.length != 3) {
-            return new PrintableString("Invalid argument length, correct usage: search <header_id> <term>")
+            return new PrintableString("Invalid argument length, correct usage: search [header_id] [term]")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
             if (this.availableCsvs.get(this.currentCsv) == this.simpleCsv) {
