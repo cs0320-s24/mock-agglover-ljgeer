@@ -13,7 +13,25 @@
     height:55vh;   
     margin: auto;
     display: block;
-    overflow: scroll;    
+    overflow-y: auto;    
+}
+.command-table {
+    margin: 0 auto;
+    text-align: left;
+    width: 80%;
+    height: auto;
+    border-collapse: collapse;
+    overflow-y: auto;
+    max-height: 100%;
+    max-width: 80%;
+}
+.table-cell {
+    vertical-align: top;
+    border: 1px solid #444444;
+    overflow: hidden;
+    width: 50%;
+    max-width: 50%;
+    white-space: normal;
 }
 
 .repl-input {        
