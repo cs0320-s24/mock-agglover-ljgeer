@@ -1,6 +1,7 @@
 import { REPLFunction } from './REPLFunction';
 import { load } from './commands/Load'
 import { view } from './commands/View'
+import { search } from './commands/Search'
 import {Printable} from '../utility/Printable'
 import {PrintableString} from '../utility/PrintableString'
 import {mockedJson} from '../../mock_json/mockedJson';
@@ -14,7 +15,7 @@ export class CommandExecutor {
         this.commands = new Map<string, REPLFunction>();
         this.registerCommand("load_file", load);
         this.registerCommand("view", view);
-        
+        this.registerCommand("search", search);
         //can add additional commands here
     }
 

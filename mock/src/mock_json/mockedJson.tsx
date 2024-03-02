@@ -50,7 +50,7 @@ export class mockedJson {
     load(args: string[]): Printable<any> {
         // Check for correct arguments
         if (args.length != 1) {
-            return new PrintableString("Invalid argument length, correct usage: load_file <path to file>");
+            return new PrintableString(" Invalid argument length, correct usage: load_file <path to file>");
         }
         const path = args[0];
         if (this.availableCsvs.has("data/" + path)) {
@@ -58,7 +58,7 @@ export class mockedJson {
             this.currentCsv = "data/" + path;
             return new PrintableString(`File "${path}" has been loaded.`);
         } else {    
-            return new PrintableString("File not found. Make sure file is in data/ directory.");
+            return new PrintableString(" File not found. Make sure file is in data/ directory.");
         }
     }
 
@@ -76,7 +76,16 @@ export class mockedJson {
         }
     }
 
-    // search(args: string[]): Printable<any> {
-        
-    // }
+    search(args: string[]): Printable<any> {
+        if (args.length != 2) {
+            return new PrintableString("Invalid argument length")
+        }
+        if (this.availableCsvs.has(this.currentCsv)) {
+            // Headers should really be checked for 'view' as well, but since CSVParser did not specify it,
+            // we will just assume headers are false for viewcsv
+            return new PrintableStringTable(this.availableCsvs.get(this.currentCsv)!, false)
+        } else {
+            return new PrintableString("Please load a file first using load_file.")
+        }
+    }
 }
