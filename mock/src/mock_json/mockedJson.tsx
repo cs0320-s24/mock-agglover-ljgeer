@@ -110,7 +110,7 @@ export class mockedJson {
      * @returns the row that the value was found in, or a failure message
      */
     search(args: string[]): Printable<any> {
-        if (args.length != 3) {
+        if (args.length != 2) {
             return new PrintableString("Invalid argument length, correct usage: search [header_id] [term]")
         }
         if (this.availableCsvs.has(this.currentCsv)) {
