@@ -307,3 +307,38 @@ test('if i log in, do some stuff, log out, i cannot press other buttons', async 
   await expect(page.getByLabel('Command input')).not.toBeVisible();
   await expect(page.getByLabel('Submit button')).not.toBeVisible();
 });
+
+test('brief and verbose displays work', async ({ page }) => {
+  await page.goto('http://localhost:8000/');
+  await page.getByLabel('Login').click();
+  await page.getByLabel('Command input').fill('load_file simple.csv');
+  await page.getByLabel('Submit button').click()
+  await page.getByLabel('Command input').fill('search 0 one');
+  await page.getByLabel('Submit button').click()
+
+  const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(1)');
+
+  const expectedRow = "onetwothreefour";
+
+  const historyContent = await page.evaluate(() => {
+    const history = document.querySelector('.repl-history');
+    return history?.children[0]?.textContent;
+  });
+
+  expect(historyContent).not.toContain("load_file simple.csv");
+  expect(outputTableRow).toContain(expectedRow);
+
+  await page.getByLabel('verbose').click()
+  
+  const outputTableRow2 = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+
+  const expectedRow2 = "onetwothreefour";
+
+  const historyContent2 = await page.evaluate(() => {
+    const history = document.querySelector('.repl-history');
+    return history?.children[0]?.textContent;
+  });
+
+  expect(historyContent2).toContain("load_file simple.csv");
+  expect(outputTableRow2).toContain(expectedRow2);
+});
