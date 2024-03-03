@@ -1,4 +1,5 @@
 > **GETTING STARTED:** You should likely start with the `/mock` folder from your solution code for the mock gearup.
+Github link: https://github.com/cs0320-s24/mock-agglover-ljgeer
 
 # Project Details
 This project essentially handles the front-end for the server we made in the previous sprint. After logging in, the user is able to load, view, and search a CSV file. The user can either view just the functions output, or they can view the command and the output via the brief / verbose radio buttons. This project "mocks" the servers functionality, by housing small example CSVs in the mockedJson class and then mocking responses from the server based on user inputs to the command input box. 
