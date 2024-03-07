@@ -325,198 +325,198 @@ test('I cannot search with invalid argument count', async ({ page }) => {
 });
 
 
-test('I cannot view without loading', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('view');
-  await page.getByLabel('Submit button').click()
+// test('I cannot view without loading', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('view');
+//   await page.getByLabel('Submit button').click()
 
-  // you can use page.evaulate to grab variable content from the page for more complex assertions
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain("Please load a file first using load_file.");
-});
+//   // you can use page.evaulate to grab variable content from the page for more complex assertions
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain("Please load a file first using load_file.");
+// });
 
-test('I cannot search without loading', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('view');
-  await page.getByLabel('Submit button').click()
+// test('I cannot search without loading', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('view');
+//   await page.getByLabel('Submit button').click()
 
-  // you can use page.evaulate to grab variable content from the page for more complex assertions
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain("Please load a file first using load_file.");
-});
+//   // you can use page.evaulate to grab variable content from the page for more complex assertions
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain("Please load a file first using load_file.");
+// });
 
-test('I can load simple.csv, then search it and find a result', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file simple.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('search 0 one');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I can load simple.csv, then search it and find a result', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file simple.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('search 0 one');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+//   const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
 
-  const expectedRow = "onetwothreefour";
+//   const expectedRow = "onetwothreefour";
 
-  expect(outputTableRow).toContain(expectedRow);
-});
+//   expect(outputTableRow).toContain(expectedRow);
+// });
 
-test('I can load header.csv, then search it and find a result', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file header.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('search header2 element');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I can load header.csv, then search it and find a result', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file header.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('search header2 element');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+//   const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
 
-  const expectedRow = "notaheaderelement";
+//   const expectedRow = "notaheaderelement";
 
-  expect(outputTableRow).toContain(expectedRow);
-});
+//   expect(outputTableRow).toContain(expectedRow);
+// });
 
-test('I can load simple.csv, then search it and not find a result', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file simple.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('search 1 one');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I can load simple.csv, then search it and not find a result', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file simple.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('search 1 one');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+//   const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
 
-  const expectedRow = "Search failed: value not found";
+//   const expectedRow = "Search failed: value not found";
 
-  expect(outputTableRow).toContain(expectedRow);
-});
+//   expect(outputTableRow).toContain(expectedRow);
+// });
 
-test('I can load simple.csv, then view it, then load something else and view it', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file simple.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('view');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I can load simple.csv, then view it, then load something else and view it', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file simple.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('view');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+//   const outputTableRow = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
 
-  const expectedRow = "onetwothreefourfivesixseveneightnineteneleventwelve";
+//   const expectedRow = "onetwothreefourfivesixseveneightnineteneleventwelve";
 
-  expect(outputTableRow).toContain(expectedRow);
+//   expect(outputTableRow).toContain(expectedRow);
 
-  await page.getByLabel('Command input').fill('load_file header.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('view');
-  await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('load_file header.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('view');
+//   await page.getByLabel('Submit button').click()
 
-  const outputTableRow2 = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
+//   const outputTableRow2 = await page.textContent('.repl-history tbody .table-cell:nth-child(2)');
 
-  const expectedRow2 = "header1header2notaheaderelementanother not-headerfinal not-header";
+//   const expectedRow2 = "header1header2notaheaderelementanother not-headerfinal not-header";
 
-  expect(outputTableRow2).toContain(expectedRow2);
-});
+//   expect(outputTableRow2).toContain(expectedRow2);
+// });
 
-test('I cannot load without specifiying a file path', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I cannot load without specifiying a file path', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
-});
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
+// });
 
-test('I cannot load with too many arguments', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file idk idk');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I cannot load with too many arguments', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file idk idk');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
-});
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain(" Invalid argument length, correct usage: load_file [path to file]");
+// });
 
-test('I cannot view with too many arguments', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('view idk');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I cannot view with too many arguments', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('view idk');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain("Incorrect usage: view has no arguments.");
-});
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain("Incorrect usage: view has no arguments.");
+// });
 
-test('I cannot search with invalid argument count', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('search idk idk idk');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('I cannot search with invalid argument count', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('search idk idk idk');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.children[0]?.textContent;
-  });
-  expect(historyContent).toContain("Invalid argument length, correct usage: search [header_id] [term]");
-});
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.children[0]?.textContent;
+//   });
+//   expect(historyContent).toContain("Invalid argument length, correct usage: search [header_id] [term]");
+// });
 
-test('i cannot see a submit button if i dont log in', async ({ page }) => {
-  await page.goto('http://localhost:8000/');
-  // Login button exists, but don't press it
-  await expect(page.getByLabel('Login')).toBeVisible();
-  await expect(page.getByLabel('Command input')).not.toBeVisible();
-  await expect(page.getByLabel('Submit button')).not.toBeVisible();
-});
+// test('i cannot see a submit button if i dont log in', async ({ page }) => {
+//   await page.goto('http://localhost:8000/');
+//   // Login button exists, but don't press it
+//   await expect(page.getByLabel('Login')).toBeVisible();
+//   await expect(page.getByLabel('Command input')).not.toBeVisible();
+//   await expect(page.getByLabel('Submit button')).not.toBeVisible();
+// });
 
-test('if i log in, do some stuff, log out, i cannot press other buttons', async ({ page }) => {
-  // Load and view a csv
-  await page.goto('http://localhost:8000/');
-  await page.getByLabel('Login').click();
-  await page.getByLabel('Command input').fill('load_file simple.csv');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('Command input').fill('view');
-  await page.getByLabel('Submit button').click()
-  await page.getByLabel('verbose').click()
+// test('if i log in, do some stuff, log out, i cannot press other buttons', async ({ page }) => {
+//   // Load and view a csv
+//   await page.goto('http://localhost:8000/');
+//   await page.getByLabel('Login').click();
+//   await page.getByLabel('Command input').fill('load_file simple.csv');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('Command input').fill('view');
+//   await page.getByLabel('Submit button').click()
+//   await page.getByLabel('verbose').click()
 
-  // you can use page.evaulate to grab variable content from the page for more complex assertions
-  const historyContent = await page.evaluate(() => {
-    const history = document.querySelector('.repl-history');
-    return history?.textContent;
-  });
-  expect(historyContent).toContain("has been loaded");
-  expect(historyContent).toContain("eleven");
+//   // you can use page.evaulate to grab variable content from the page for more complex assertions
+//   const historyContent = await page.evaluate(() => {
+//     const history = document.querySelector('.repl-history');
+//     return history?.textContent;
+//   });
+//   expect(historyContent).toContain("has been loaded");
+//   expect(historyContent).toContain("eleven");
 
-  // Signing out should remove the buttons from interaction
-  await page.getByLabel('Sign out').click();
-  await expect(page.getByLabel('Login')).toBeVisible();
-  await expect(page.getByLabel('Submit button')).not.toBeVisible();
-  await expect(page.getByLabel('Command input')).not.toBeVisible();
-  await expect(page.getByLabel('Submit button')).not.toBeVisible();
-});
+//   // Signing out should remove the buttons from interaction
+//   await page.getByLabel('Sign out').click();
+//   await expect(page.getByLabel('Login')).toBeVisible();
+//   await expect(page.getByLabel('Submit button')).not.toBeVisible();
+//   await expect(page.getByLabel('Command input')).not.toBeVisible();
+//   await expect(page.getByLabel('Submit button')).not.toBeVisible();
+// });
 
 test('brief and verbose displays work', async ({ page }) => {
   await page.goto('http://localhost:8000/');
